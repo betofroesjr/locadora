@@ -22,7 +22,7 @@ public class Modelo extends Entidade {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_fabricante")
-	@NotNull(message = "O campo fabrincate é obrigatorio!")
+	@NotNull(message = "O campo fabricante é obrigatorio!")
 	private Fabricante fabricante;
 	
 	public Modelo() {

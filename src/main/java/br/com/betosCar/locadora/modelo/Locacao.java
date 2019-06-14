@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
@@ -12,13 +14,20 @@ import org.springframework.format.annotation.NumberFormat;
 @Entity
 public class Locacao extends Entidade {
 
-	@NotNull(message = "O campo valor total da Diária não pode ser nulo!")
+	@NotNull(message = "O campo valor total da Diária não pode estar vazio!")
 	@Column(precision = 10, scale = 2)
 	@NumberFormat(pattern="#,##0.00")
 	private BigDecimal valorTotal;
 	
+	@NotNull(message = "O campo data de locação não pode estar vazio!")
 	private LocalDate dataDeLocacao;
+
+	@NotNull(message = "O campo data de locação não pode estar vazio!")
 	private LocalDate dataDeDevolucao;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_carro")
+	@NotNull(message = "O campo carro é obrigatorio!")
 	private Carro carro;
 	
 	public Locacao() {
