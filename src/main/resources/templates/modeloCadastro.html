@@ -1,52 +1,51 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layoutPadrao}">
 <head>
 <meta charset="UTF-8">
-<title>Cadastro de modelo</title>
+<title>Cadastro de Modelo</title>
 </head>
 <body>
-	<a th:href="@{/modelos}">Listar</a>
-
-	<h1>Cadastro de modelo</h1>
+	<section layout:fragment="conteudo">
+		<div class="py-1 text-center">
+			<h2 class="h1-responsive font-weight-bold text-center">Cadastro de Modelo</h2>
+		</div>
+		<form class="form-horizontal" action="/modelos" method="POST" th:object="${modelo}">
 	
-	<form action="/modelos" method="POST" th:object="${modelo}">
-	
-		<!-- ERROS -->
-		<div th:if="${#fields.hasAnyErrors()}">
-			<div th:each="error : ${#fields.detailedErrors()}">
-				<span th:text="${error.message}"></span>
+			<div th:replace="mensagemErro"></div>
+			<div th:replace="mensagemGeral"></div>
+			<div class="container shadow p-3 mb-5 bg-light rounded">
+			
+				<input type="hidden" th:field="*{id}"/>
+				
+				<div class="form-group form-control-sm">
+					<label for="descricao">Descrição:</label>
+					<input id="descricao" class="form-control" type="text" th:field="*{descricao}"/>
+				</div>
+				
+				<div class="form-group form-control-sm">
+					<label for="categoria">Categoria:</label>
+					<select id="categoria" th:field="*{categoria}" class="form-control">
+						<option value=""> -- SELECIONE -- </option>
+						<option th:each="categoria : ${todasCategorias}" th:text="${categoria.descricao}" th:value="${categoria}"></option>
+					</select>
+				</div>
+				
+				<div class="form-group form-control-sm">
+					<label for="fabricante">Fabricante:</label>
+					<select id="fabricante" th:field="*{fabricante}" class="form-control">
+						<option value=""> -- SELECIONE -- </option>
+						<option th:each="fabricante : ${todosFabricantes}" th:text="${fabricante.nome}" th:value="${fabricante.id}"></option>
+					</select>
+				</div>
+				
+				<div class="form-group form-control-sm">
+					<button type="submit" class="btn btn-primary btn-sm">SALVAR</button>
+					<a th:href="@{/modelos}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Lista</a>
+				</div>
 			</div>
-		</div>
-		
-		<!-- MENSAGEM GERAL -->
-		<div th:if="${!#strings.isEmpty(mensagem)}">
-			<span th:text="${mensagem}"></span>
-		</div>
-		
-		<input type="hidden" th:field="*{id}"/>
-		
-		<label for="descricao">Descrição:</label>
-		<input id="descricao" type="text" th:field="*{descricao}"/>
-
-		<br/>
-		
-		<label for="categoria">Categoria:</label>
-		<select id="categoria" th:field="*{categoria}">
-			<option value=""> -- SELECIONE -- </option>
-			<option th:each="categoria : ${todasCategorias}" th:text="${categoria.descricao}" th:value="${categoria}"></option>
-		</select>
-		
-		<br/>
-
-		<label for="fabricante">Fabricante:</label>
-		<select id="fabricante" th:field="*{fabricante}">
-			<option value=""> -- SELECIONE -- </option>
-			<option th:each="fabricante : ${todosFabricantes}" th:text="${fabricante.nome}" th:value="${fabricante.id}"></option>
-		</select>
-		
-		<br/>
-		
-		<button type="submit" >SALVAR</button>
-	</form>
+		</form>
+	</section>
 </body>
 </html>

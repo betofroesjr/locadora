@@ -45,7 +45,17 @@ public class Carro extends Entidade {
 		this.modelo = modelo;
 	}
 	public String getNomeModelo(){
-		return getNome() + " - " + getModelo();
+		String nomeCompletoCarro = getNome();
+		if(getModelo() != null){
+			nomeCompletoCarro += getModelo().getDescricao() + " ";
+			if(getModelo().getCategoria() != null){
+				nomeCompletoCarro += getModelo().getCategoria().getDescricao() + " ";
+			}
+			if(getModelo().getFabricante() != null){
+				nomeCompletoCarro += getModelo().getFabricante().getNome() + " ";
+			}
+		}
+		return nomeCompletoCarro;
 	}
 	public String getNome() {
 		return nome;

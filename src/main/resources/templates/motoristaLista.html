@@ -1,38 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layoutPadrao}">
 <head>
 <meta charset="UTF-8">
 <title>Lista de Motorista</title>
 </head>
 <body>
-	<a th:href="@{/motoristas/novo}">Novo</a>
-	
-	<h1>Lista de Motorista</h1>
-	<table border="1">
-		<thead>
-			<tr>
-				<th>id</th>
-				<th>Nome</th>
-				<th>CPF</th>
-				<th>CNH</th>
-				<th>Sexo</th>
-				<th>Locação</th>
-				<th>Ação</th>
-			</tr>
-		</thead>
-		<tbody>
-		 <tr th:each="motorista : ${motoristas}">
-		 	<td th:text="${motorista.id}"></td>
-		 	<td th:text="${motorista.nome}"></td>
-		 	<td th:text="${motorista.cpf}"></td>
-		 	<td th:text="${motorista.cnh}"></td>
-		 	<td th:text="${motorista.sexo.descricao}"></td>
-		 	<td>
-		 		<a th:href="@{/motoristas/editar/{id}(id=${motorista.id})}">Editar</a>
-		 		<a onclick="return confirm('Confirma a exclusão?');" th:href="@{/motoristas/excluir/{id}(id=${motorista.id})}">Excluir</a>
-		 	</td>
-		 </tr>
-		</tbody>
-	</table>
+	<section layout:fragment="conteudo">
+		<div class="py-1 text-center">
+			<h2 class="h1-responsive font-weight-bold text-center">Lista de Motorista</h2>
+		</div>
+		<div class="container table-responsive">
+		<table class="table table-striped table-sm">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Nome</th>
+					<th>CPF</th>
+					<th>CNH</th>
+					<th>Sexo</th>
+					<th><a th:href="@{/motoristas/novo}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Novo</a></th>
+				</tr>
+			</thead>
+			<tbody>
+			 <tr th:each="motorista : ${motoristas}">
+			 	<td th:text="${motorista.id}"></td>
+			 	<td th:text="${motorista.nome}"></td>
+			 	<td th:text="${motorista.cpf}"></td>
+			 	<td th:text="${motorista.cnh}"></td>
+			 	<td th:text="${motorista.sexo.descricao}"></td>
+			 	<td>
+			 		<a th:href="@{/motoristas/editar/{id}(id=${motorista.id})}">Editar</a>
+			 		<a onclick="return confirm('Confirma a exclusão?');" th:href="@{/motoristas/excluir/{id}(id=${motorista.id})}">Excluir</a>
+			 	</td>
+			 </tr>
+			  <tr th:if="${#lists.isEmpty(motoristas)}">
+			 	<td colspan="6">Nenhum registro foi cadastrado!</td>
+			 </tr>
+			</tbody>
+		</table>
+	</div>
+	</section>
 </body>
 </html>

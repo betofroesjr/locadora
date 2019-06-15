@@ -3,8 +3,6 @@ package br.com.betosCar.locadora.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.betosCar.locadora.modelo.Entidade;
+import br.com.betosCar.locadora.service.PadroesServiceInterface;
 
-public abstract class PadroesController<E extends Entidade, T extends JpaRepository<E, Long>> {
+public abstract class PadroesController<E extends Entidade, S extends PadroesServiceInterface<E>> {
 
 	private static final String MENSAGEM_ALTERAÇÃO = "ALTERAÇÃO REALIZADA COM SUCESSO!";
 
@@ -33,7 +32,7 @@ public abstract class PadroesController<E extends Entidade, T extends JpaReposit
 	public static final String REDIRECT = "redirect:";
 	
 	@Autowired
-	protected T repository;
+	protected S service;
 	
 	
 	@PostMapping
@@ -44,10 +43,10 @@ public abstract class PadroesController<E extends Entidade, T extends JpaReposit
 		}
 		
 		if(entidade.getId() == null){
-			repository.save(entidade);
+			service.incluir(entidade);
 			redirectAttributes.addFlashAttribute(MENSAGEM, MENSAGEM_INCLUSAO);
 		} else {
-			repository.save(entidade);
+			service.alterar(entidade);
 			redirectAttributes.addFlashAttribute(MENSAGEM, MENSAGEM_ALTERAÇÃO);			
 		}
 		
@@ -64,15 +63,14 @@ public abstract class PadroesController<E extends Entidade, T extends JpaReposit
 	@GetMapping(EDITAR+BARRA+"{"+ID+"}")
 	public ModelAndView editar(@PathVariable(ID) Long id){
 		ModelAndView modelAndView = new ModelAndView(getName());
-		modelAndView.addObject(repository.findById(id)
-				.orElseThrow(() -> new EmptyResultDataAccessException(0)));
+		modelAndView.addObject(service.pesquisarPorId(id));
 		return modelAndView;
 	}
 
 	@GetMapping(EXCLUIR+BARRA+"{"+ID+"}")
-	public ModelAndView excluir(@PathVariable(ID) Long id, Errors erros, RedirectAttributes redirectAttributes){
+	public ModelAndView excluir(@PathVariable(ID) Long id){
 		ModelAndView modelAndView = new ModelAndView(REDIRECT+BARRA+getPage());
-		repository.deleteById(id);
+		service.excluir(id);;
 		return modelAndView;
 	}
 	
@@ -80,7 +78,7 @@ public abstract class PadroesController<E extends Entidade, T extends JpaReposit
 	public ModelAndView listar(){
 		ModelAndView modelAndView = new ModelAndView(getListar());
 		
-		modelAndView.addObject(getPage(), repository.findAll());
+		modelAndView.addObject(getPage(), service.listar());
 		
 		return modelAndView;
 	}
@@ -88,5 +86,5 @@ public abstract class PadroesController<E extends Entidade, T extends JpaReposit
 	public abstract String getName();
 	public abstract String getListar();
 	public abstract String getPage();
-	public abstract Object getEntidade();
+	public abstract Entidade getEntidade();
 }

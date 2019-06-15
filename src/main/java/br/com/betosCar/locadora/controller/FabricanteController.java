@@ -3,12 +3,13 @@ package br.com.betosCar.locadora.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.betosCar.locadora.modelo.Entidade;
 import br.com.betosCar.locadora.modelo.Fabricante;
-import br.com.betosCar.locadora.repository.FabricanteRepository;
+import br.com.betosCar.locadora.service.FabricanteService;
 
 @Controller
 @RequestMapping(FabricanteController.BARRA+FabricanteController.FABRICANTES)
-public class FabricanteController extends PadroesController<Fabricante, FabricanteRepository> {
+public class FabricanteController extends PadroesController<Fabricante, FabricanteService> {
 
 	public static final String FABRICANTES = "fabricantes";
 
@@ -28,7 +29,7 @@ public class FabricanteController extends PadroesController<Fabricante, Fabrican
 	}
 
 	@Override
-	public Object getEntidade() {
+	public Entidade getEntidade() {
 		return new Fabricante();
 	}
 }

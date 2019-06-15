@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.betosCar.locadora.modelo.Carro;
+import br.com.betosCar.locadora.modelo.Entidade;
 import br.com.betosCar.locadora.modelo.Locacao;
 import br.com.betosCar.locadora.modelo.Motorista;
 import br.com.betosCar.locadora.repository.CarroRepository;
-import br.com.betosCar.locadora.repository.LocacaoRepository;
 import br.com.betosCar.locadora.repository.MotoristaRepository;
+import br.com.betosCar.locadora.service.LocacaoService;
 
 @Controller
 @RequestMapping(LocacaoController.BARRA+LocacaoController.LOCACOES)
-public class LocacaoController extends PadroesController<Locacao, LocacaoRepository> {
+public class LocacaoController extends PadroesController<Locacao, LocacaoService> {
 
 	public static final String LOCACOES = "locacoes";
 	
@@ -42,7 +43,7 @@ public class LocacaoController extends PadroesController<Locacao, LocacaoReposit
 	}
 
 	@Override
-	public Object getEntidade() {
+	public Entidade getEntidade() {
 		return new Locacao();
 	}
 	

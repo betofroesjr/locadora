@@ -1,41 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layoutPadrao}">
 <head>
 <meta charset="UTF-8">
-<title>Cadastro de fabricante</title>
+<title>Cadastro de Fabricante</title>
 </head>
 <body>
-	<a th:href="@{/fabricantes}">Listar</a>
-
-	<h1>Cadastro de fabricante</h1>
-	
-	<form action="/fabricantes" method="POST" th:object="${fabricante}">
-	
-		<!-- ERROS -->
-		<div th:if="${#fields.hasAnyErrors()}">
-			<div th:each="error : ${#fields.detailedErrors()}">
-				<span th:text="${error.message}"></span>
+	<section layout:fragment="conteudo">
+		<div class="py-1 text-center">
+			<h2 class="h1-responsive font-weight-bold text-center">Cadastro de Fabricante</h2>
+		</div>
+		<form class="form-horizontal" action="/fabricantes" method="POST" th:object="${fabricante}">
+			<div th:replace="mensagemErro"></div>
+			<div th:replace="mensagemGeral"></div>
+			<div class="container shadow p-3 mb-5 bg-light rounded">
+				<input type="hidden" th:field="*{id}"/>
+				
+				<div class="form-group form-control-sm">
+					<label for="nome">Nome:</label>
+					<input id="nome" class="form-control" type="text" th:field="*{nome}"/>
+				</div>
+		
+				<div class="form-group form-control-sm">
+					<label for="descricao">Descrição:</label>
+					<input id="descricao" class="form-control" type="text" th:field="*{descricao}"/>
+				</div>
+				<div class="form-group form-control-sm">
+					<button type="submit" class="btn btn-primary btn-sm">SALVAR</button>
+					<a th:href="@{/fabricantes}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Lista</a>
+				</div>
 			</div>
-		</div>
-		
-		<!-- MENSAGEM GERAL -->
-		<div th:if="${!#strings.isEmpty(mensagem)}">
-			<span th:text="${mensagem}"></span>
-		</div>
-		
-		<input type="hidden" th:field="*{id}"/>
-		
-		<label for="nome">Nome:</label>
-		<input id="nome" type="text" th:field="*{nome}"/>
-
-		<br/>
-
-		<label for="descricao">Descrição:</label>
-		<input id="descricao" type="text" th:field="*{descricao}"/>
-
-		<br/>
-		
-		<button type="submit" >SALVAR</button>
-	</form>
+		</form>
+	</section>
 </body>
 </html>

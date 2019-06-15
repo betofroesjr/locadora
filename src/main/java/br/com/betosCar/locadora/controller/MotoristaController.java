@@ -4,13 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.betosCar.locadora.modelo.Entidade;
 import br.com.betosCar.locadora.modelo.Motorista;
 import br.com.betosCar.locadora.modelo.type.Sexo;
 import br.com.betosCar.locadora.repository.MotoristaRepository;
+import br.com.betosCar.locadora.service.MotoristaService;
 
 @Controller
 @RequestMapping(MotoristaController.BARRA+MotoristaController.MOTORISTAS)
-public class MotoristaController extends PadroesController<Motorista, MotoristaRepository>{
+public class MotoristaController extends PadroesController<Motorista, MotoristaService>{
 
 	public static final String MOTORISTAS = "motoristas";
 
@@ -30,7 +32,7 @@ public class MotoristaController extends PadroesController<Motorista, MotoristaR
 	}
 
 	@Override
-	public Object getEntidade() {
+	public Entidade getEntidade() {
 		return new Motorista();
 	}
 	

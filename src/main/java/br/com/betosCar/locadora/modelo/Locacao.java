@@ -48,6 +48,12 @@ public class Locacao extends Entidade {
 		this.dataDeDevolucao = dataDeDevolucao;
 		this.carro = carro;
 	}
+	public Motorista getMotorista() {
+		return motorista;
+	}
+	public void setMotorista(Motorista motorista) {
+		this.motorista = motorista;
+	}
 	public BigDecimal getValorTotal() {
 		return valorTotal;
 	}

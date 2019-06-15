@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layoutPadrao}">
 <head>
 <meta charset="UTF-8">
-<title>Cadastro de motorista</title>
+<title>Cadastro de Motorista</title>
 </head>
 <body>
-	<a th:href="@{/motoristas}">Listar</a>
-
-	<h1>Cadastro de motorista</h1>
+	<section layout:fragment="conteudo">
+		<div class="py-1 text-center">
+			<h2 class="h1-responsive font-weight-bold text-center">Cadastro de Motorista</h2>
+		</div>
 	
-	<form action="/motoristas" method="POST" th:object="${motorista}">
-	
-		<!-- ERROS -->
-		<div th:if="${#fields.hasAnyErrors()}">
-			<div th:each="error : ${#fields.detailedErrors()}">
-				<span th:text="${error.message}"></span>
+		<form class="form-horizontal" action="/motoristas" method="POST" th:object="${motorista}">
+			<div th:replace="mensagemErro"></div>
+			<div th:replace="mensagemGeral"></div>
+			<div class="container shadow p-3 mb-5 bg-light rounded">
+			
+				<input type="hidden" th:field="*{id}"/>
+				
+				<div class="form-group form-control-sm">
+					<label for="nome">Nome:</label>
+					<input id="nome" class="form-control" type="text" th:field="*{nome}"/>
+				</div>
+				
+				<div class="form-group form-control-sm">
+					<label for="cpf">CPF:</label>
+					<input id="cpf" class="form-control" type="text" th:field="*{cpf}"/>
+				</div>
+				
+				<div class="form-group form-control-sm">
+					<label for="cnh">CNH:</label>
+					<input id="cnh" class="form-control" type="text" th:field="*{cnh}"/>
+				</div>
+		
+				<div class="form-group form-control-sm">
+					<label for="sexo">Sexo:</label>
+					<select id="sexo" th:field="*{sexo}" class="form-control">
+						<option value=""> -- SELECIONE -- </option>
+						<option th:each="sexo : ${todosSexos}" th:text="${sexo.descricao}" th:value="${sexo}"></option>
+					</select>
+				</div>
+							
+				<div class="form-group form-control-sm">
+					<button type="submit" class="btn btn-primary btn-sm">SALVAR</button>
+					<a th:href="@{/motoristas}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Lista</a>
+				</div>
 			</div>
-		</div>
-		
-		<!-- MENSAGEM GERAL -->
-		<div th:if="${!#strings.isEmpty(mensagem)}">
-			<span th:text="${mensagem}"></span>
-		</div>
-		
-		<input type="hidden" th:field="*{id}"/>
-		
-		<label for="nome">Nome:</label>
-		<input id="nome" type="text" th:field="*{nome}"/>
-
-		<br/>
-
-		<label for="cpf">CPF:</label>
-		<input id="cpf" type="text" th:field="*{cpf}"/>
-
-		<br/>
-
-		<label for="cnh">CNH:</label>
-		<input id="cnh" type="text" th:field="*{cnh}"/>
-
-		<br/>
-
-		<label for="sexo">Sexo:</label>
-		<select id="sexo" th:field="*{sexo}">
-			<option value=""> -- SELECIONE -- </option>
-			<option th:each="sexo : ${todosSexos}" th:text="${sexo.descricao}" th:value="${sexo}"></option>
-		</select>
-		
-		<br/>		
-		<button type="submit" >SALVAR</button>
-	</form>
+		</form>
+	</section>
 </body>
 </html>

@@ -7,15 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.betosCar.locadora.modelo.Entidade;
 import br.com.betosCar.locadora.modelo.Fabricante;
 import br.com.betosCar.locadora.modelo.Modelo;
 import br.com.betosCar.locadora.modelo.type.Categoria;
 import br.com.betosCar.locadora.repository.FabricanteRepository;
-import br.com.betosCar.locadora.repository.ModeloRepository;
+import br.com.betosCar.locadora.service.ModeloService;
 
 @Controller
 @RequestMapping(ModeloController.BARRA+ModeloController.MODELOS)
-public class ModeloController extends PadroesController<Modelo, ModeloRepository>{
+public class ModeloController extends PadroesController<Modelo, ModeloService>{
 
 	public static final String MODELOS = "modelos";
 
@@ -38,7 +39,7 @@ public class ModeloController extends PadroesController<Modelo, ModeloRepository
 	}
 
 	@Override
-	public Object getEntidade() {
+	public Entidade getEntidade() {
 		return new Modelo();
 	}
 	

@@ -1,67 +1,61 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layoutPadrao}">
 <head>
 <meta charset="UTF-8">
 <title>Cadastro de Locação</title>
 </head>
 <body>
-	<a th:href="@{/locacoes}">Listar</a>
-
-	<h1>Cadastro de Locação</h1>
-	
-	<form action="/locacoes" method="POST" th:object="${locacao}">
-	
-		<!-- ERROS -->
-		<div th:if="${#fields.hasAnyErrors()}">
-			<div th:each="error : ${#fields.detailedErrors()}">
-				<span th:text="${error.message}"></span>
+	<section layout:fragment="conteudo">
+		<div class="py-1 text-center">
+			<h2 class="h1-responsive font-weight-bold text-center">Cadastro de Locação</h2>
+		</div>
+		
+		<form class="form-horizontal" action="/locacoes" method="POST" th:object="${locacao}">
+			<div th:replace="mensagemErro"></div>
+			<div th:replace="mensagemGeral"></div>
+			<div class="container shadow p-3 mb-5 bg-light rounded">
+			
+				<input type="hidden" th:field="*{id}"/>
+				
+				<div class="form-group form-control-sm">
+					<label for="motorista">Motorista:</label>
+					<select id="motorista" th:field="*{motorista}" class="form-control">
+						<option value=""> -- SELECIONE -- </option>
+						<option th:each="motorista : ${todosMotoristas}" th:text="${motorista.nome}" th:value="${motorista.id}"></option>
+					</select>
+				</div>
+				
+				<div class="form-group form-control-sm">		
+					<label for="carro">Carros:</label>
+					<select id="carro" th:field="*{carro}" class="form-control">
+						<option value=""> -- SELECIONE -- </option>
+						<option th:each="carro : ${todosCarros}" th:text="${carro.nomeModelo}" th:value="${carro.id}"></option>
+					</select>
+				</div>
+				
+				<div class="form-group form-control-sm">				
+					<label for="dataDeLocacao">Data de Locação:</label>
+					<input id="dataDeLocacao" class="form-control" type="date" th:field="*{dataDeLocacao}"/>
+				</div>
+		
+				<div class="form-group form-control-sm">		
+					<label for="dataDeDevolucao">Data de Devolução:</label>
+					<input id="dataDeDevolucao" class="form-control" type="date" th:field="*{dataDeDevolucao}"/>
+				</div>
+		
+				<div class="form-group form-control-sm">				
+					<label for="valorTotal">Valor Total:</label>
+					<input id="valorTotal" class="form-control" type="text" th:field="*{valorTotal}"/>
+				</div>	
+				
+				<div class="form-group form-control-sm">				
+					<button type="submit" class="btn btn-primary btn-sm">SALVAR</button>
+					<a th:href="@{/locacoes}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Lista</a>
+				</div>
 			</div>
-		</div>
-		
-		<!-- MENSAGEM GERAL -->
-		<div th:if="${!#strings.isEmpty(mensagem)}">
-			<span th:text="${mensagem}"></span>
-		</div>
-		
-		<input type="hidden" th:field="*{id}"/>
-		
-		<label for="motorista">Carros:</label>
-		<select id="motorista" th:field="*{motorista}">
-			<option value=""> -- SELECIONE -- </option>
-			<option th:each="motorista : ${todosMotoristas}" th:text="${motorista.nome}" th:value="${motorista.id}"></option>
-		</select>
-		
-		<br/>
-
-		<label for="carro">Carros:</label>
-		<select id="carro" th:field="*{carro}">
-			<option value=""> -- SELECIONE -- </option>
-			<option th:each="carro : ${todosCarros}" th:text="${carro.nomeModelo}" th:value="${carro.id}"></option>
-		</select>
-		
-		<br/>
-		
-		<label for="dataDeLocacao">Data de Locação:</label>
-		<input id="dataDeLocacao" type="date" th:field="*{dataDeLocacao}"/>
-
-		<br/>
-
-		<label for="dataDeDevolucao">Data de Devolução:</label>
-		<input id="dataDeDevolucao" type="date" th:field="*{dataDeDevolucao}"/>
-
-		<br/>
-		
-		<label for="valorTotal">Valor Total:</label>
-		<input id="valorTotal" type="text" th:field="*{valorTotal}"/>
-
-		<br/>
-
-		<label for="descricao">Descrição:</label>
-		<input id="descricao" type="text" th:field="*{descricao}"/>
-
-		<br/>
-		
-		<button type="submit" >SALVAR</button>
-	</form>
+		</form>
+	</section>
 </body>
 </html>
