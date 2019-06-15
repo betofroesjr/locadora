@@ -26,11 +26,6 @@ public class Motorista extends Entidade{
 	@NotNull(message = "O campo tipo sexo não pode estar vazio!")
 	private Sexo sexo;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_locacao")
-	@NotNull(message = "O campo locação não pode estar vazio!")
-	private Locacao locacao;
-	
 	public Motorista() {
 	}
 	public Motorista(Long id, String nome, String cpf, String cnh, Sexo sexo,
@@ -40,7 +35,6 @@ public class Motorista extends Entidade{
 		this.cpf = cpf;
 		this.cnh = cnh;
 		this.sexo = sexo;
-		this.locacao = locacao;
 	}
 	public String getNome() {
 		return nome;
@@ -65,11 +59,5 @@ public class Motorista extends Entidade{
 	}
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
-	}
-	public Locacao getLocacao() {
-		return locacao;
-	}
-	public void setLocacao(Locacao locacao) {
-		this.locacao = locacao;
 	}
 }

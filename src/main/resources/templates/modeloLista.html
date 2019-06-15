@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista de modelos</title>
+</head>
+<body>
+	<a th:href="@{/modelos/novo}">Novo</a>
+	
+	<h1>Lista de modelos</h1>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>Descrição</th>
+				<th>Categoria</th>
+				<th>Fabricante</th>
+				<th>Ação</th>
+			</tr>
+		</thead>
+		<tbody>
+		 <tr th:each="modelo : ${modelos}">
+		 	<td th:text="${modelo.id}"></td>
+		 	<td th:text="${modelo.descricao}"></td>
+		 	<td th:text="${modelo.categoria.descricao}"></td>
+		 	<td th:text="${modelo.fabricante.nome}"></td>
+		 	<td>
+		 		<a th:href="@{/modelos/editar/{id}(id=${modelo.id})}">Editar</a>
+		 		<a onclick="return confirm('Confirma a exclusão?');" th:href="@{/modelos/excluir/{id}(id=${modelo.id})}">Excluir</a>
+		 	</td>
+		 </tr>
+		</tbody>
+	</table>
+</body>
+</html>

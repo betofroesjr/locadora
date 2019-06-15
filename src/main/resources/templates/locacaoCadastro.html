@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de Locação</title>
+</head>
+<body>
+	<a th:href="@{/locacoes}">Listar</a>
+
+	<h1>Cadastro de Locação</h1>
+	
+	<form action="/locacoes" method="POST" th:object="${locacao}">
+	
+		<!-- ERROS -->
+		<div th:if="${#fields.hasAnyErrors()}">
+			<div th:each="error : ${#fields.detailedErrors()}">
+				<span th:text="${error.message}"></span>
+			</div>
+		</div>
+		
+		<!-- MENSAGEM GERAL -->
+		<div th:if="${!#strings.isEmpty(mensagem)}">
+			<span th:text="${mensagem}"></span>
+		</div>
+		
+		<input type="hidden" th:field="*{id}"/>
+		
+		<label for="motorista">Carros:</label>
+		<select id="motorista" th:field="*{motorista}">
+			<option value=""> -- SELECIONE -- </option>
+			<option th:each="motorista : ${todosMotoristas}" th:text="${motorista.nome}" th:value="${motorista.id}"></option>
+		</select>
+		
+		<br/>
+
+		<label for="carro">Carros:</label>
+		<select id="carro" th:field="*{carro}">
+			<option value=""> -- SELECIONE -- </option>
+			<option th:each="carro : ${todosCarros}" th:text="${carro.nomeModelo}" th:value="${carro.id}"></option>
+		</select>
+		
+		<br/>
+		
+		<label for="dataDeLocacao">Data de Locação:</label>
+		<input id="dataDeLocacao" type="date" th:field="*{dataDeLocacao}"/>
+
+		<br/>
+
+		<label for="dataDeDevolucao">Data de Devolução:</label>
+		<input id="dataDeDevolucao" type="date" th:field="*{dataDeDevolucao}"/>
+
+		<br/>
+		
+		<label for="valorTotal">Valor Total:</label>
+		<input id="valorTotal" type="text" th:field="*{valorTotal}"/>
+
+		<br/>
+
+		<label for="descricao">Descrição:</label>
+		<input id="descricao" type="text" th:field="*{descricao}"/>
+
+		<br/>
+		
+		<button type="submit" >SALVAR</button>
+	</form>
+</body>
+</html>

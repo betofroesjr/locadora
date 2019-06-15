@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de modelo</title>
+</head>
+<body>
+	<a th:href="@{/modelos}">Listar</a>
+
+	<h1>Cadastro de modelo</h1>
+	
+	<form action="/modelos" method="POST" th:object="${modelo}">
+	
+		<!-- ERROS -->
+		<div th:if="${#fields.hasAnyErrors()}">
+			<div th:each="error : ${#fields.detailedErrors()}">
+				<span th:text="${error.message}"></span>
+			</div>
+		</div>
+		
+		<!-- MENSAGEM GERAL -->
+		<div th:if="${!#strings.isEmpty(mensagem)}">
+			<span th:text="${mensagem}"></span>
+		</div>
+		
+		<input type="hidden" th:field="*{id}"/>
+		
+		<label for="descricao">Descrição:</label>
+		<input id="descricao" type="text" th:field="*{descricao}"/>
+
+		<br/>
+		
+		<label for="categoria">Categoria:</label>
+		<select id="categoria" th:field="*{categoria}">
+			<option value=""> -- SELECIONE -- </option>
+			<option th:each="categoria : ${todasCategorias}" th:text="${categoria.descricao}" th:value="${categoria}"></option>
+		</select>
+		
+		<br/>
+
+		<label for="fabricante">Fabricante:</label>
+		<select id="fabricante" th:field="*{fabricante}">
+			<option value=""> -- SELECIONE -- </option>
+			<option th:each="fabricante : ${todosFabricantes}" th:text="${fabricante.nome}" th:value="${fabricante.id}"></option>
+		</select>
+		
+		<br/>
+		
+		<button type="submit" >SALVAR</button>
+	</form>
+</body>
+</html>

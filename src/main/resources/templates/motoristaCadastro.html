@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de motorista</title>
+</head>
+<body>
+	<a th:href="@{/motoristas}">Listar</a>
+
+	<h1>Cadastro de motorista</h1>
+	
+	<form action="/motoristas" method="POST" th:object="${motorista}">
+	
+		<!-- ERROS -->
+		<div th:if="${#fields.hasAnyErrors()}">
+			<div th:each="error : ${#fields.detailedErrors()}">
+				<span th:text="${error.message}"></span>
+			</div>
+		</div>
+		
+		<!-- MENSAGEM GERAL -->
+		<div th:if="${!#strings.isEmpty(mensagem)}">
+			<span th:text="${mensagem}"></span>
+		</div>
+		
+		<input type="hidden" th:field="*{id}"/>
+		
+		<label for="nome">Nome:</label>
+		<input id="nome" type="text" th:field="*{nome}"/>
+
+		<br/>
+
+		<label for="cpf">CPF:</label>
+		<input id="cpf" type="text" th:field="*{cpf}"/>
+
+		<br/>
+
+		<label for="cnh">CNH:</label>
+		<input id="cnh" type="text" th:field="*{cnh}"/>
+
+		<br/>
+
+		<label for="sexo">Sexo:</label>
+		<select id="sexo" th:field="*{sexo}">
+			<option value=""> -- SELECIONE -- </option>
+			<option th:each="sexo : ${todosSexos}" th:text="${sexo.descricao}" th:value="${sexo}"></option>
+		</select>
+		
+		<br/>		
+		<button type="submit" >SALVAR</button>
+	</form>
+</body>
+</html>

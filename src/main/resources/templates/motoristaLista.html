@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Motorista</title>
+</head>
+<body>
+	<a th:href="@{/motoristas/novo}">Novo</a>
+	
+	<h1>Lista de Motorista</h1>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>Nome</th>
+				<th>CPF</th>
+				<th>CNH</th>
+				<th>Sexo</th>
+				<th>Locação</th>
+				<th>Ação</th>
+			</tr>
+		</thead>
+		<tbody>
+		 <tr th:each="motorista : ${motoristas}">
+		 	<td th:text="${motorista.id}"></td>
+		 	<td th:text="${motorista.nome}"></td>
+		 	<td th:text="${motorista.cpf}"></td>
+		 	<td th:text="${motorista.cnh}"></td>
+		 	<td th:text="${motorista.sexo.descricao}"></td>
+		 	<td>
+		 		<a th:href="@{/motoristas/editar/{id}(id=${motorista.id})}">Editar</a>
+		 		<a onclick="return confirm('Confirma a exclusão?');" th:href="@{/motoristas/excluir/{id}(id=${motorista.id})}">Excluir</a>
+		 	</td>
+		 </tr>
+		</tbody>
+	</table>
+</body>
+</html>

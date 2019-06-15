@@ -14,6 +14,9 @@ import org.springframework.format.annotation.NumberFormat;
 @Entity
 public class Carro extends Entidade {
 
+	@NotBlank(message= "O nome do carro é obrigatório!")
+	private String nome;
+	
 	@NotBlank(message = "O campo placa é obrigatório!")
 	private String placa;
 	
@@ -32,13 +35,23 @@ public class Carro extends Entidade {
 	
 	public Carro() {
 	}
-	public Carro(Long id, String placa, String chassi,
+	public Carro(Long id,String nome, String placa, String chassi,
 			BigDecimal valorDaDiaria, Modelo modelo) {
 		super(id);
+		this.nome = nome;
 		this.placa = placa;
 		this.chassi = chassi;
 		this.valorDaDiaria = valorDaDiaria;
 		this.modelo = modelo;
+	}
+	public String getNomeModelo(){
+		return getNome() + " - " + getModelo();
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	public String getPlaca() {
 		return placa;

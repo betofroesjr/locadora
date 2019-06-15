@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Fabricante</title>
+</head>
+<body>
+	<a th:href="@{/fabricantes/novo}">Novo</a>
+	
+	<h1>Lista de Fabricante</h1>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>Nome</th>
+				<th>Descrição</th>
+				<th>Ação</th>
+			</tr>
+		</thead>
+		<tbody>
+		 <tr th:each="fabricante : ${fabricantes}">
+		 	<td th:text="${fabricante.id}"></td>
+		 	<td th:text="${fabricante.nome}"></td>
+		 	<td th:text="${fabricante.descricao}"></td>
+		 	<td>
+		 		<a th:href="@{/fabricantes/editar/{id}(id=${fabricante.id})}">Editar</a>
+		 		<a onclick="return confirm('Confirma a exclusão?');" th:href="@{/fabricantes/excluir/{id}(id=${fabricante.id})}">Excluir</a>
+		 	</td>
+		 </tr>
+		</tbody>
+	</table>
+</body>
+</html>
