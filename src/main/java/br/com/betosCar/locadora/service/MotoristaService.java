@@ -7,5 +7,4 @@ import br.com.betosCar.locadora.repository.MotoristaRepository;
 
 @Service
 public class MotoristaService extends PadroesService<Motorista, MotoristaRepository>{
-
 }

@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,8 @@ public abstract class PadroesController<E extends Entidade, S extends PadroesSer
 	
 	@Autowired
 	protected S service;
+
+	private String mensagemExcecaoErro;
 	
 	
 	@PostMapping
@@ -55,6 +58,7 @@ public abstract class PadroesController<E extends Entidade, S extends PadroesSer
 	
 	@RequestMapping(NOVO)
 	public ModelAndView novo(){
+		this.mensagemExcecaoErro = null;
 		ModelAndView modelAndView = new ModelAndView(getName());
 		modelAndView.addObject(getEntidade());
 		return modelAndView;
@@ -69,9 +73,19 @@ public abstract class PadroesController<E extends Entidade, S extends PadroesSer
 
 	@GetMapping(EXCLUIR+BARRA+"{"+ID+"}")
 	public ModelAndView excluir(@PathVariable(ID) Long id){
-		ModelAndView modelAndView = new ModelAndView(REDIRECT+BARRA+getPage());
-		service.excluir(id);;
+		ModelAndView modelAndView = null;
+		modelAndView = new ModelAndView(REDIRECT+BARRA+getPage());
+		try {
+			service.excluir(id);
+		} catch (Exception e) {
+			mensagemExcecaoErro = e.getMessage();
+		}
 		return modelAndView;
+	}
+	
+	@ModelAttribute(name="mensagemExcecaoErro")
+	public String getMensagemExcecaoErro() {
+		return mensagemExcecaoErro;
 	}
 	
 	@GetMapping

@@ -12,8 +12,8 @@
 			<h2 class="h1-responsive font-weight-bold text-center">Cadastro de Modelo</h2>
 		</div>
 		<form class="form-horizontal" action="/modelos" method="POST" th:object="${modelo}">
-	
 			<div th:replace="mensagemErro"></div>
+			<div th:replace="mensagemExcecaoErro"></div>
 			<div th:replace="mensagemGeral"></div>
 			<div class="container shadow p-3 mb-5 bg-light rounded">
 			

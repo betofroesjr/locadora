@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.betosCar.locadora.modelo.Entidade;
 import br.com.betosCar.locadora.modelo.Motorista;
 import br.com.betosCar.locadora.modelo.type.Sexo;
-import br.com.betosCar.locadora.repository.MotoristaRepository;
 import br.com.betosCar.locadora.service.MotoristaService;
 
 @Controller
